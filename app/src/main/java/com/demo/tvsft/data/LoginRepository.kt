@@ -10,9 +10,7 @@ import android.icu.util.Output
 
 class LoginRepository(val dataSource: LoginDataSource) {
 
-
-
-    fun login(): Result<OutputModel> {
+    suspend  fun login(): Result<OutputModel> {
         // handle login
         val result = dataSource.login(10)
 
