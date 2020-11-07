@@ -48,6 +48,7 @@ class LoginActivity : AppCompatActivity() {
 
     /**
      * Init adapter
+     * We have to user decorator for spacing if needed
      */
     private fun initAdapter() {
 
@@ -100,6 +101,9 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Update data in adapter
+     */
     private fun updateUiWithUser(model: OutputModel) {
         isLastPage = !model.data.has_more
         adapter.AddData(model.data.users as ArrayList<Users>)
