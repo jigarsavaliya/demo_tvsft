@@ -8,26 +8,28 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
-class AdapterRepo : PagedListAdapter<Users, RecyclerView.ViewHolder>(REPO_COMPARATOR) {
+/**
+ * Adapter to show user data as per required
+ */
+class AdapterRepo(private val list:ArrayList<Users>) :
+
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ViewHolderRepo.create(parent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val repoItem = getItem(position)
-        if (repoItem != null) {
-            (holder as ViewHolderRepo).bind(repoItem)
-        }
+        val repoItem = list.get(position)
+        (holder as ViewHolderRepo).bind(repoItem)
     }
 
-    companion object {
-        private val REPO_COMPARATOR = object : DiffUtil.ItemCallback<Users>() {
-            override fun areItemsTheSame(oldItem: Users, newItem: Users): Boolean =
-                    oldItem.name == newItem.name
-
-            override fun areContentsTheSame(oldItem: Users, newItem: Users): Boolean =
-                    oldItem == newItem
-        }
+    override fun getItemCount(): Int {
+        return list.size;
     }
+
+    public fun AddData(list:ArrayList<Users>){
+        list.addAll(list);
+    }
+
 }

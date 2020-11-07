@@ -1,7 +1,6 @@
 package com.demo.tvsft.data
 
 import OutputModel
-import android.icu.util.Output
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -10,11 +9,9 @@ import android.icu.util.Output
 
 class LoginRepository(val dataSource: LoginDataSource) {
 
-    suspend  fun login(): Result<OutputModel> {
+    suspend  fun login(ofset: Int): Result<OutputModel> {
         // handle login
-        val result = dataSource.login(10)
-
-
+        val result = dataSource.login(ofset)
         return result
     }
 

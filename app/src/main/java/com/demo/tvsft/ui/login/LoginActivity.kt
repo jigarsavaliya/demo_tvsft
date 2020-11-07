@@ -1,6 +1,7 @@
 package com.demo.tvsft.ui.login
 
 import OutputModel
+import Users
 import android.app.Activity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,20 +16,37 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.paging.PagedList
+import androidx.recyclerview.widget.RecyclerView
 
 import com.demo.tvsft.R
+import com.demo.tvsft.adapter.AdapterRepo
 
 class LoginActivity : AppCompatActivity() {
 
+    private val adapter: AdapterRepo = AdapterRepo(ArrayList());
     private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
-Init();
+        Init();
+        initAdapter()
+GetDataInitial();
 
+    }
 
+    private fun initAdapter() {
+
+        val rv_user_items:RecyclerView = findViewById(R.id.rv_user_items);
+        rv_user_items.adapter = adapter;
+
+    }
+
+    private fun GetDataInitial() {
+
+        loginViewModel.Getdata(0);
     }
 
     private fun Init() {
@@ -36,7 +54,6 @@ Init();
 
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
-
 
         loginViewModel.loginResult.observe(this@LoginActivity, Observer {
             val loginResult = it ?: return@Observer
@@ -53,7 +70,10 @@ Init();
 
     }
 
-    private fun updateUiWithUser(model:OutputModel) {
+    private fun updateUiWithUser(model: OutputModel) {
+
+
+            adapter.AddData(model.data.users as ArrayList<Users>)
 
     }
 

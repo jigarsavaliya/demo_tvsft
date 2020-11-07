@@ -12,11 +12,7 @@ class Retrofit() {
     private val BASE_URL="http://sd2-hiring.herokuapp.com/";
    public val apiService:ApiService;
 
-
-
     init {
-
-
         apiService =
                 Retrofit.Builder()
                         .baseUrl(BASE_URL)

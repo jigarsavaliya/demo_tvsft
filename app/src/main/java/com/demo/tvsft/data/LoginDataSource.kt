@@ -16,10 +16,11 @@ class LoginDataSource {
 
     suspend  fun login(offset: Int): Result<OutputModel> {
         try {
-
                 val output = Retrofit().apiService.GetUserList(offset);
-
+            if (output.isSuccessful && output.body()!!.status)
             return Result.Success(output.body()!!);
+            else
+                throw Exception("Something went wrong");
         } catch (e: Throwable) {
             return Result.Error(IOException("Error logging in", e))
         }
