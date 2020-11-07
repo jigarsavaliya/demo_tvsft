@@ -1,13 +1,16 @@
 package com.demo.tvsft.Api
 
 import OutputModel
+import android.R
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
 
-    @GET("api/users?offset={ofset}&limit=10")
-    suspend fun GetUserList(@Path("ofset") offset:Int): Response<OutputModel>
+    @GET("api/users")
+    suspend fun GetUserList(@Query("offset") offset:Int,
+                            @Query("limit") limit:Int): Response<OutputModel>;
 
 }

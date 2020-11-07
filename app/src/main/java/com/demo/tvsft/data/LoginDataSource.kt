@@ -16,7 +16,7 @@ class LoginDataSource {
 
     suspend  fun login(offset: Int): Result<OutputModel> {
         try {
-                val output = Retrofit().apiService.GetUserList(offset);
+                val output = Retrofit().apiService.GetUserList(offset,10);
             if (output.isSuccessful && output.body()!!.status)
             return Result.Success(output.body()!!);
             else
@@ -26,7 +26,5 @@ class LoginDataSource {
         }
     }
 
-    fun logout() {
-        // TODO: revoke authentication
-    }
+
 }

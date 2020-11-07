@@ -12,24 +12,24 @@ import androidx.recyclerview.widget.RecyclerView
  * Adapter to show user data as per required
  */
 class AdapterRepo(private val list:ArrayList<Users>) :
-
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
+    var postList: ArrayList<Users> = list
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ViewHolderRepo.create(parent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val repoItem = list.get(position)
+        val repoItem = postList.get(position)
         (holder as ViewHolderRepo).bind(repoItem)
     }
 
     override fun getItemCount(): Int {
-        return list.size;
+        return postList.size;
     }
 
-    public fun AddData(list:ArrayList<Users>){
-        list.addAll(list);
+    fun AddData(list:ArrayList<Users>){
+        postList.addAll(list);
+        notifyDataSetChanged();
     }
 
 }

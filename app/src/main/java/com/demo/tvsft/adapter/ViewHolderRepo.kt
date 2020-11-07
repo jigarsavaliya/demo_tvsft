@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.demo.tvsft.R
 
-
 class ViewHolderRepo(view: View,val context:Context) : RecyclerView.ViewHolder(view) {
 
     private var repo: Users? = null
@@ -24,34 +23,33 @@ class ViewHolderRepo(view: View,val context:Context) : RecyclerView.ViewHolder(v
 
 
     fun bind(repo: Users?) {
-        if (repo == null) {
-            val resources = itemView.resources
 
-        } else {
-            showRepoData(repo)
-        }
+            showRepoData(repo!!)
+
     }
 
+    /**
+     * Data set ousers in this mathod
+     */
     private fun showRepoData(repos: Users) {
         this.repo = repos
         name.text=this.repo?.name;
-        Glide.with(itemView).load(this.repo?.image).into(ivdp);
+        Glide.with(itemView).load(this.repo?.image).placeholder(R.mipmap.ic_launcher).into(ivdp);
         val adapter = ImageAdapter(this.repo?.items as ArrayList<String>)
 
         val layoutManager = GridLayoutManager(context, 2)
 
-        // Create a custom SpanSizeLookup where the first item spans both columns
-
-        // Create a custom SpanSizeLookup where the first item spans both columns
         layoutManager.spanSizeLookup = object : SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return if (position == 0) 2 else 1
+                if (repos.items.size % 2 == 0)
+                    return 2;
+                else
+                    return if (position == 0) 1 else 2
+
             }
         }
-        if (this.repo!!.items.size % 2 == 0)
-            Items.layoutManager=GridLayoutManager(context, 2);
-        else
-            Items.layoutManager=GridLayoutManager(context, 1);
+
+            Items.layoutManager=layoutManager;
 
         Items.adapter=adapter;
 

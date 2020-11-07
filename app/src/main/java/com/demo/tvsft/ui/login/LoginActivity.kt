@@ -17,15 +17,24 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.paging.PagedList
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.demo.tvsft.R
 import com.demo.tvsft.adapter.AdapterRepo
+import com.demo.tvsft.adapter.PaginationScrollListener
 
+/**
+ * By Jigar savaliya
+ */
 class LoginActivity : AppCompatActivity() {
 
     private val adapter: AdapterRepo = AdapterRepo(ArrayList());
     private lateinit var loginViewModel: LoginViewModel
+    lateinit var loading:ProgressBar;
+    var isLastPage: Boolean = false
+    var isLoading: Boolean = false
+    var ofset: Int = 0;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,24 +42,44 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         Init();
         initAdapter()
-GetDataInitial();
+        GetDataInitial(ofset);
 
     }
 
+    /**
+     * Init adapter
+     */
     private fun initAdapter() {
 
-        val rv_user_items:RecyclerView = findViewById(R.id.rv_user_items);
+        val rv_user_items: RecyclerView = findViewById(R.id.rv_user_items);
         rv_user_items.adapter = adapter;
 
+        rv_user_items.addOnScrollListener(object :
+            PaginationScrollListener(rv_user_items.layoutManager as LinearLayoutManager) {
+            override fun isLastPage(): Boolean {
+                return isLastPage
+            }
+
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+
+            override fun loadMoreItems() {
+                isLoading = true
+                ofset += 10;
+                //you have to call loadmore items to get more data
+                GetDataInitial(ofset)
+            }
+        })
     }
 
-    private fun GetDataInitial() {
-
-        loginViewModel.Getdata(0);
+    private fun GetDataInitial(ofset: Int) {
+        loading.visibility = View.VISIBLE;
+        loginViewModel.Getdata(ofset);
     }
 
     private fun Init() {
-        val loading = findViewById<ProgressBar>(R.id.loading)
+        loading = findViewById<ProgressBar>(R.id.loading)
 
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
@@ -71,9 +100,8 @@ GetDataInitial();
     }
 
     private fun updateUiWithUser(model: OutputModel) {
-
-
-            adapter.AddData(model.data.users as ArrayList<Users>)
+        isLastPage = !model.data.has_more
+        adapter.AddData(model.data.users as ArrayList<Users>)
 
     }
 
