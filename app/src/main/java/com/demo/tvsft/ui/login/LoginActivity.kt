@@ -80,7 +80,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun Init() {
-        loading = findViewById<ProgressBar>(R.id.loading)
+        loading = findViewById(R.id.loading)
 
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)

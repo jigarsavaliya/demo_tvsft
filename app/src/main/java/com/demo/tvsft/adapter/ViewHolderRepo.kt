@@ -30,6 +30,7 @@ class ViewHolderRepo(view: View,val context:Context) : RecyclerView.ViewHolder(v
 
     /**
      * Data set ousers in this mathod
+     * in this we have implement custome span logic depend on size of array
      */
     private fun showRepoData(repos: Users) {
         this.repo = repos
@@ -41,7 +42,7 @@ class ViewHolderRepo(view: View,val context:Context) : RecyclerView.ViewHolder(v
 
         layoutManager.spanSizeLookup = object : SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                if (repos.items.size % 2 == 0)
+                if (repo!!.items.size % 2 == 0)
                     return 2;
                 else
                     return if (position == 0) 1 else 2

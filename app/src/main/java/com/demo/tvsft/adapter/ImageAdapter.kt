@@ -16,8 +16,6 @@ internal class ImageAdapter(list:ArrayList<String>) :
     RecyclerView.Adapter<ImageAdapter.UserPostHolder>() {
     var postList: ArrayList<String> = list
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserPostHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.item_image, parent, false)
