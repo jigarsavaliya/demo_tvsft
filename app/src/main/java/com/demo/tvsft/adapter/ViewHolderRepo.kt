@@ -49,8 +49,7 @@ class ViewHolderRepo(view: View,val context:Context) : RecyclerView.ViewHolder(v
             }
         }
 
-            Items.layoutManager=layoutManager;
-
+        Items.layoutManager=layoutManager;
         Items.adapter=adapter;
 
     }

@@ -69,6 +69,7 @@ class LoginActivity : AppCompatActivity() {
                 ofset += 10;
                 //you have to call loadmore items to get more data
                 GetDataInitial(ofset)
+                isLoading = false
             }
         })
     }
