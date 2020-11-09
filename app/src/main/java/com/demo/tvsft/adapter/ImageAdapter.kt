@@ -54,7 +54,7 @@ internal class ImageAdapter(list:ArrayList<String>) :
     {
 
         fun bind(item: String) {
-            Glide.with(itemView).load("https://upload.wikimedia.org/wikipedia/commons/6/65/Baby.tux-800x800.png").placeholder(R.mipmap.ic_launcher).into(image);
+            Glide.with(itemView).load(item).placeholder(R.mipmap.ic_launcher).into(image);
         }
 
         val image:ImageView = view.findViewById(R.id.Iv_image)

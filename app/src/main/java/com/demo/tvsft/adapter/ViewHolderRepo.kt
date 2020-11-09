@@ -38,20 +38,25 @@ class ViewHolderRepo(view: View,val context:Context) : RecyclerView.ViewHolder(v
         Glide.with(itemView).load(this.repo?.image).placeholder(R.mipmap.ic_launcher).into(ivdp);
         val adapter = ImageAdapter(this.repo?.items as ArrayList<String>)
 
-        val layoutManager = GridLayoutManager(context, 2)
+        if(Items.layoutManager == null) {
+            val layoutManager = GridLayoutManager(context, 2)
 
-        layoutManager.spanSizeLookup = object : SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                if (repo!!.items.size % 2 == 0)
-                    return 2;
-                else
-                    return if (position == 0) 1 else 2
 
+            layoutManager.spanSizeLookup = object : SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    if (repo!!.items.size % 2 == 0)
+                        return 1;
+                    else
+                        return if (position == 0) 2 else 1
+
+                }
             }
+
+            Items.layoutManager = layoutManager;
+            Items.adapter = adapter;
         }
 
-        Items.layoutManager=layoutManager;
-        Items.adapter=adapter;
+
 
     }
 
